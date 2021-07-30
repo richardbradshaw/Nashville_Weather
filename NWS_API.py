@@ -159,8 +159,15 @@ hourlyFilename = 'hourlyForecastNash.csv'
 
 # Check if output file exists
 if path.exists(forecastFilename):
-    forecast_df.to_csv(forecastFilename, mode='a', header=False, index=False)
-    hourly_df.to_csv(hourlyFilename, mode='a', header=False, index=False)
+    oldForecast = pd.read_csv('forecastNash.csv')
+    oldHourly = pd.read_csv('hourlyForecastNash.csv')
+    forecast_out = pd.concat([oldForecast, forecast_df], ignore_index=True, sort=False)
+    hourly_out = pd.concat([oldHourly, hourly_df], ignore_index=True, sort=False)
+    
+    forecast_out.to_csv(forecastFilename, index=False)
+    hourly_out.to_csv(hourlyFilename, index=False)
+    #forecast_df.to_csv(forecastFilename, mode='a', header=False, index=False)
+    #hourly_df.to_csv(hourlyFilename, mode='a', header=False, index=False)
 else:
     # Save initial data to file
     forecast_df.to_csv(forecastFilename, index=False)
