@@ -5,12 +5,7 @@
 
 
 import pandas as pd
-# import numpy as np
-# import matplotlib.pyplot as plt
-# import seaborn as sns
 import requests
-from pandas.plotting import register_matplotlib_converters
-register_matplotlib_converters()
 
 
 # In[2]:
@@ -29,14 +24,15 @@ data = data.iloc[:-3]
 
 # Remove the first two column header levels, then rename the remaining columns
 data.columns = data.columns.droplevel([0,1])
-data = data.rename(columns = {'Air':'AirTemp','Max.':'6hourMaxTemp','Min.':'6hourMinTemp','1 hr':'1hrPrecip','3 hr':'3hrPrecip','6 hr':'6hrPrecip','RelativeHumidity':'RelativeHumidity(%)'})
+data = data.rename(columns = {'Air':'AirTemp','Max.':'6hourMaxTemp','Min.':'6hourMinTemp',
+                              '1 hr':'1hrPrecip','3 hr':'3hrPrecip','6 hr':'6hrPrecip',
+                              'RelativeHumidity':'RelativeHumidity(%)'})
 
 
 # In[4]:
 
 
-from datetime import date, datetime, timedelta
-from dateutil import tz
+from datetime import date
 retrievalDate = date.today()
 
 
@@ -46,7 +42,8 @@ retrievalDate = date.today()
 # Change numerical values to floats
 data[['Date', 'Vis.(mi.)', 'AirTemp', 'Dwpt', '6hourMaxTemp', '6hourMinTemp',
        'WindChill(°F)', 'HeatIndex(°F)', 'altimeter(in)', 'sea level(mb)',
-       '1hrPrecip', '3hrPrecip', '6hrPrecip']] = data[['Date', 'Vis.(mi.)', 'AirTemp', 'Dwpt', '6hourMaxTemp', '6hourMinTemp',
+       '1hrPrecip', '3hrPrecip', '6hrPrecip']] = data[['Date', 'Vis.(mi.)', 'AirTemp', 'Dwpt', 
+                                                       '6hourMaxTemp', '6hourMinTemp',
        'WindChill(°F)', 'HeatIndex(°F)', 'altimeter(in)', 'sea level(mb)',
        '1hrPrecip', '3hrPrecip', '6hrPrecip']].astype('float')
 
