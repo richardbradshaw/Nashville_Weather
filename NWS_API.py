@@ -6,15 +6,22 @@
 
 import requests
 import pandas as pd
+#import numpy as np
+#import matplotlib.pyplot as plt
+#import seaborn as sns
+# get_ipython().run_line_magic('matplotlib', 'inline')
 import re
 from time import sleep
 
+from pandas.plotting import register_matplotlib_converters
+register_matplotlib_converters()
 
 
 # In[2]:
 
 
 from datetime import datetime
+#from dateutil import tz
 retrievalDate = datetime.today()
 retrievalDate = retrievalDate.replace(minute=0, second=0, microsecond=0)
 
@@ -31,6 +38,11 @@ json_data = r.json()
 # In[4]:
 
 
+# Get forecast data
+# forecast = json_data['properties']['forecast']
+# r_Forecast = requests.get(forecast)
+# json_data_forecast = r_Forecast.json()
+# forecast_df = pd.DataFrame(json_data_forecast['properties']['periods'])
 
 # Patch to fix common error: KeyError: 'properties'
 for x in range(5):
@@ -50,6 +62,12 @@ for x in range(5):
     else:
         break
 
+
+# In[6]:
+
+
+# r_current = requests.get('https://api.weather.gov/stations/OHX/observations')
+# json_data_current = r_current.json()
 
 
 # In[8]:
@@ -148,6 +166,8 @@ if path.exists(forecastFilename):
     
     forecast_out.to_csv(forecastFilename, index=False)
     hourly_out.to_csv(hourlyFilename, index=False)
+    #forecast_df.to_csv(forecastFilename, mode='a', header=False, index=False)
+    #hourly_df.to_csv(hourlyFilename, mode='a', header=False, index=False)
 else:
     # Save initial data to file
     forecast_df.to_csv(forecastFilename, index=False)
